@@ -2,6 +2,7 @@ package com.sddrozdov.weatherappcompose
 
 import android.content.Context
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -13,19 +14,23 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
-import androidx.compose.material3.CalendarLocale
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.sddrozdov.weatherappcompose.Constants.Const
 import com.sddrozdov.weatherappcompose.ui.theme.WeatherAppComposeTheme
-import retrofit2.Call
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
@@ -38,7 +43,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             WeatherAppComposeTheme {
-                Greeting("12as")
+                Greeting("Volgograd")
             }
         }
     }
@@ -50,6 +55,8 @@ fun Greeting(city: String) {
     val state = remember {
         mutableStateOf("Null")
     }
+    val scope = rememberCoroutineScope()
+    val context = LocalContext.current
 
     Column(modifier = Modifier.fillMaxSize()) {
         Box(
@@ -71,7 +78,9 @@ fun Greeting(city: String) {
         ) {
             Button(
                 onClick = {
-                    //getResult(city)
+                    scope.launch {
+                        getWeather(scope = this, location = city, state = state, context = context)
+                    }
                 }, modifier = Modifier
                     .padding(8.dp)
                     .fillMaxWidth()
@@ -82,21 +91,12 @@ fun Greeting(city: String) {
     }
 }
 
-
-private fun getResult(city: String, state: MutableState<String>, context: Context) {
-    val url = "https://api.weatherapi.com/v1/current.json" +
-            "?key = ${Const.API_KEY}" +
-            "q = $city" +
-            "&aqi=no"
-}
-
-
 interface WeatherApi {
     @GET("current.json")
-    fun getCurrentWeather(
+    suspend fun getCurrentWeather(
         @Query("key") apiKey: String,
         @Query("q") location: String
-    ): Call<WeatherResponse>
+    ): WeatherResponse
 }
 
 data class WeatherResponse(
@@ -138,8 +138,36 @@ object ApiClient {
     }
 }
 
-fun getWeather(){
-    TODO()
+fun getWeather(
+    scope: CoroutineScope,
+    location: String,
+    state: MutableState<String>,
+    context: Context
+) {
+    val apiKey = Const.API_KEY
+
+    scope.launch(Dispatchers.IO) {
+        try {
+            val response = ApiClient.weatherApi.getCurrentWeather(apiKey, location)
+            withContext(Dispatchers.Main) {
+                state.value = "${response.current.temp_c} C"
+                Toast.makeText(
+                    context,
+                    "Updated: ${response.location.localtime}",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        } catch (e: Exception) {
+            withContext(Dispatchers.Main) {
+                state.value = "Error"
+                Toast.makeText(
+                    context,
+                    "Error: ${e.localizedMessage}",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        }
+    }
 }
 
 
