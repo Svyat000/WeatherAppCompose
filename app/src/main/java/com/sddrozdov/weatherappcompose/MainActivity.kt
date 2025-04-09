@@ -26,6 +26,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.sddrozdov.weatherappcompose.Constants.Const
+import com.sddrozdov.weatherappcompose.models.WeatherResponse
 import com.sddrozdov.weatherappcompose.ui.theme.WeatherAppComposeTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -99,10 +100,6 @@ interface WeatherApi {
     ): WeatherResponse
 }
 
-data class WeatherResponse(
-    val location: Location,
-    val current: Current
-)
 
 data class Location(
     val name: String,
