@@ -13,3 +13,9 @@
 .externalNativeBuild
 .cxx
 local.properties
+*.log
+*.tmp
+Thumbs.db
+*.swp
+*.apk
+*.aab
