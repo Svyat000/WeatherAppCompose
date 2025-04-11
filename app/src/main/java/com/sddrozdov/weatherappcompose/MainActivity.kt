@@ -23,6 +23,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.sddrozdov.weatherappcompose.repository.WeatherRepository
+import com.sddrozdov.weatherappcompose.ui.screens.MainScreen
 import com.sddrozdov.weatherappcompose.ui.theme.WeatherAppComposeTheme
 import kotlinx.coroutines.launch
 
@@ -35,7 +36,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             WeatherAppComposeTheme {
-                Greeting("Moscow")
+               MainScreen()
             }
         }
     }
