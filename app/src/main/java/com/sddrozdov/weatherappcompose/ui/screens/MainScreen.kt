@@ -1,7 +1,6 @@
 package com.sddrozdov.weatherappcompose.ui.screens
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -9,9 +8,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -47,14 +49,13 @@ fun MainScreen() {
         Card(
             modifier = Modifier.fillMaxWidth(),
             colors = CardDefaults.cardColors(containerColor = Blue),
-            elevation = CardDefaults.cardElevation(defaultElevation = 2 .dp),
+            elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
             shape = RoundedCornerShape(12.dp)
         ) {
             Column(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.wrapContentHeight(),
                 horizontalAlignment = Alignment.CenterHorizontally
-            )
-            {
+            ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween
@@ -74,11 +75,52 @@ fun MainScreen() {
                             .padding(top = 3.dp, end = 9.dp)
                     )
                 }
+                Text(
+                    text = "Volgograd", style = TextStyle(
+                        fontSize = 20.sp,
+                        color = Color.Yellow
+                    )
+                )
+                Text(
+                    text = "20 C", style = TextStyle(
+                        fontSize = 60.sp,
+                        color = Color.Yellow
+                    )
+                )
+                Text(
+                    text = "Sunny", style = TextStyle(
+                        fontSize = 20.sp,
+                        color = Color.Yellow
+                    )
+                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    IconButton(onClick = {
+
+                    }) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.baseline_search_24),
+                            contentDescription = "icon2"
+                        )
+                    }
+                    Text(
+                        text = "Max C Min C", style = TextStyle(
+                            fontSize = 20.sp,
+                            color = Color.Yellow
+                        )
+                    )
+                    IconButton(onClick = {
+
+                    }) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.baseline_sync_24),
+                            contentDescription = "icon3"
+                        )
+                    }
+                }
             }
-
-
         }
     }
-
-
 }
