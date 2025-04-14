@@ -1,5 +1,6 @@
 package com.sddrozdov.weatherappcompose.ui.screens
 
+import android.widget.TableLayout
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -9,16 +10,20 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.Tab
+import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -32,18 +37,9 @@ import com.sddrozdov.weatherappcompose.ui.theme.Blue
 
 @Preview(showBackground = true)
 @Composable
-fun MainScreen() {
-    Image(
-        painter = painterResource(R.drawable.sky_background),
-        contentDescription = "skyback",
-        modifier = Modifier
-            .fillMaxSize()
-            .alpha(0.7f),
-        contentScale = ContentScale.FillBounds
-    )
+fun MainCard() {
     Column(
         modifier = Modifier
-            .fillMaxSize()
             .padding(10.dp)
     ) {
         Card(
@@ -121,6 +117,32 @@ fun MainScreen() {
                     }
                 }
             }
+        }
+    }
+}
+
+
+@Composable
+fun TabLayout() {
+
+    val tabList = listOf("HOURS", "DAYS")
+
+    Column(modifier = Modifier.clip(RoundedCornerShape(4.dp))) {
+        TabRow(
+            selectedTabIndex = 0,
+            indicator = {},
+            containerColor = Blue,
+            contentColor = Color.Yellow
+        ) {
+            tabList.forEachIndexed { index, str ->
+                Tab(selected = false,
+                    onClick = {},
+                    text = {
+                        Text(text = str)
+                    }
+                )
+            }
+
         }
     }
 }
