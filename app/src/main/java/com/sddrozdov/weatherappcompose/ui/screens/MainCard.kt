@@ -121,7 +121,7 @@ fun MainCard() {
     }
 }
 
-
+@Preview(showBackground = true)
 @Composable
 fun TabLayout() {
 
@@ -165,8 +165,29 @@ fun TabLayout() {
         HorizontalPager(
             state = pagerState,
             modifier = Modifier.weight(1.0f)
+        ) { index ->
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun ListItem() {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 5.dp),
+        colors = CardDefaults.cardColors(contentColor = Blue),
+        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
+        shape = RoundedCornerShape(4.dp)
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            index ->
+            Column() {
+
+            }
         }
     }
 }
