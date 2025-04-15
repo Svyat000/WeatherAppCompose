@@ -3,10 +3,13 @@ package com.sddrozdov.weatherappcompose.ui.screens
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -35,7 +38,7 @@ import com.sddrozdov.weatherappcompose.R
 import com.sddrozdov.weatherappcompose.ui.theme.Blue
 import kotlinx.coroutines.launch
 
-@Preview(showBackground = true)
+//@Preview(showBackground = true)
 @Composable
 fun MainCard() {
     Column(
@@ -121,7 +124,7 @@ fun MainCard() {
     }
 }
 
-@Preview(showBackground = true)
+//@Preview(showBackground = true)
 @Composable
 fun TabLayout() {
 
@@ -166,6 +169,11 @@ fun TabLayout() {
             state = pagerState,
             modifier = Modifier.weight(1.0f)
         ) { index ->
+            LazyColumn(modifier = Modifier.fillMaxSize()) {
+                items(20) {
+                    ListItem()
+                }
+            }
         }
     }
 }
@@ -183,11 +191,23 @@ fun ListItem() {
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Column() {
-
+            Column(modifier = Modifier.padding(start = 5.dp, top = 3.dp, bottom = 3.dp)) {
+                Text(text = "test1")
+                Text(text = "test2")
             }
+
+            Text(text = "test 3", color = Color.Yellow, style = TextStyle(fontSize = 20.sp))
+            AsyncImage(
+                model = "https://cdn.weatherapi.com/weather/64x64/day/113.png",
+                contentDescription = "imageWeatherApi",
+                modifier = Modifier
+                    .size(40.dp)
+                    .padding(top = 3.dp, end = 9.dp)
+                    .size(40.dp)
+            )
         }
     }
 }
