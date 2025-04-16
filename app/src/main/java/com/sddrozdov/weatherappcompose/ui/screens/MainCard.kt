@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -35,6 +36,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import com.sddrozdov.weatherappcompose.R
+import com.sddrozdov.weatherappcompose.models.WeatherM
+import com.sddrozdov.weatherappcompose.models.WeatherResponse
 import com.sddrozdov.weatherappcompose.ui.theme.Blue
 import kotlinx.coroutines.launch
 
@@ -170,17 +173,42 @@ fun TabLayout() {
             modifier = Modifier.weight(1.0f)
         ) { index ->
             LazyColumn(modifier = Modifier.fillMaxSize()) {
-                items(20) {
-                    ListItem()
+
+                itemsIndexed(
+                    listOf(
+                        WeatherM(
+                            "Volgograd",
+                            "22:22",
+                            "20",
+                            "Sunny",
+                            "//cdn.weatherapi.com/weather/64x64/day/113.png",
+                            "",
+                            "",
+                            ""
+                        ),
+                        WeatherM(
+                            "Volgograd",
+                            "20/20/2000",
+                            "20",
+                            "Sunny",
+                            "//cdn.weatherapi.com/weather/64x64/day/113.png",
+                            "",
+                            "",
+                            "test"
+                        )
+                    )
+                ) { _, item ->
+                    ListItem(item)
                 }
+
+
             }
         }
     }
 }
 
-@Preview(showBackground = true)
 @Composable
-fun ListItem() {
+fun ListItem(item: WeatherM) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -195,13 +223,17 @@ fun ListItem() {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Column(modifier = Modifier.padding(start = 5.dp, top = 3.dp, bottom = 3.dp)) {
-                Text(text = "test1")
-                Text(text = "test2")
+                Text(text = item.time)
+                Text(text = item.condition)
             }
 
-            Text(text = "test 3", color = Color.Yellow, style = TextStyle(fontSize = 20.sp))
+            Text(
+                text = item.currentTemp.ifEmpty { "${item.tempMax}/${item.tempMix}" },
+                color = Color.Yellow,
+                style = TextStyle(fontSize = 20.sp)
+            )
             AsyncImage(
-                model = "https://cdn.weatherapi.com/weather/64x64/day/113.png",
+                model = "https:${item.icon}",
                 contentDescription = "imageWeatherApi",
                 modifier = Modifier
                     .size(40.dp)
