@@ -1,6 +1,7 @@
 package com.sddrozdov.weatherappcompose.repository
 
 import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.runtime.MutableState
 import com.sddrozdov.weatherappcompose.Constants.Const
@@ -26,16 +27,17 @@ class WeatherRepository {
                 withContext(Dispatchers.Main) {
                     state.value = "${response.current.temp_c} C"
                     Toast.makeText(
-                        context,
+                        context.applicationContext,
                         "Updated: ${response.location.localtime}",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
+                Log.d("MYTAGGG","$response")
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
                     state.value = "Error"
                     Toast.makeText(
-                        context,
+                        context.applicationContext,
                         "Error: ${e.localizedMessage}",
                         Toast.LENGTH_LONG
                     ).show()
