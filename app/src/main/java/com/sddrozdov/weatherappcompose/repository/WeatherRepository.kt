@@ -19,14 +19,18 @@ class WeatherRepository {
         location: String,
         state: MutableState<String>,
         context: Context,
-        onSuccess: (WeatherResponse) -> Unit,
+        listener: WeatherRepositoryListener,
+       // onSuccess: (WeatherResponse) -> Unit,
     )  {
         val apiKey = Const.API_KEY
 
         scope.launch(Dispatchers.IO) {
             try {
                 val response = ApiClient.weatherApi.getWeatherWithDays(apiKey, location, 3)
-                onSuccess(response)
+                listener.onWeatherReceived(response)
+              //  onSuccess(response)
+
+
 //                withContext(Dispatchers.Main) {
 //                    state.value = "$response"
 //                    Toast.makeText(
@@ -58,4 +62,7 @@ class WeatherRepository {
             }
         }
     }
+}
+interface WeatherRepositoryListener{
+    fun onWeatherReceived(weatherResponse: WeatherResponse)
 }

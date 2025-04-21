@@ -1,5 +1,6 @@
 package com.sddrozdov.weatherappcompose
 
+import android.app.Activity
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -18,14 +19,16 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import com.sddrozdov.weatherappcompose.models.WeatherResponse
 
 import com.sddrozdov.weatherappcompose.repository.WeatherRepository
+import com.sddrozdov.weatherappcompose.repository.WeatherRepositoryListener
 import com.sddrozdov.weatherappcompose.ui.screens.MainCard
 import com.sddrozdov.weatherappcompose.ui.screens.TabLayout
 import com.sddrozdov.weatherappcompose.ui.theme.WeatherAppComposeTheme
 
 
-class MainActivity : ComponentActivity() {
+class MainActivity : ComponentActivity(),WeatherRepositoryListener {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,6 +54,10 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
+    override fun onWeatherReceived(weatherResponse: WeatherResponse) {
+                Log.d("MAINACT","$weatherResponse")
+    }
 }
 
 @Composable
@@ -62,13 +69,14 @@ fun GetWeather(city: String) {
     }
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
+    val activity = LocalContext.current
     LaunchedEffect(city) {
         weatherRepository.getWeather(
             scope = scope,
             location = city,
             state = state,
-            context = context,
-            onSuccess = { response -> Log.d("MAIN ACTIVITY", "$response") })
+            context = context, listener = activity as MainActivity)
+           // onSuccess = { response -> Log.d("MAIN ACTIVITY", "$response") })
     }
 }
 
