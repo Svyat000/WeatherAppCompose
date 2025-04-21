@@ -1,6 +1,7 @@
 package com.sddrozdov.weatherappcompose
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -24,9 +25,7 @@ import com.sddrozdov.weatherappcompose.ui.screens.TabLayout
 import com.sddrozdov.weatherappcompose.ui.theme.WeatherAppComposeTheme
 
 
-
 class MainActivity : ComponentActivity() {
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,8 +62,13 @@ fun GetWeather(city: String) {
     }
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
-    LaunchedEffect(city){
-        weatherRepository.getWeather(scope = scope, location = city,state = state, context = context)
+    LaunchedEffect(city) {
+        weatherRepository.getWeather(
+            scope = scope,
+            location = city,
+            state = state,
+            context = context,
+            onSuccess = { response -> Log.d("MAIN ACTIVITY", "$response") })
     }
 }
 
