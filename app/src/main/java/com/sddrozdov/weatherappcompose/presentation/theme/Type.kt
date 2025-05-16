@@ -1,4 +1,4 @@
-package com.sddrozdov.weatherappcompose.ui.theme
+package com.sddrozdov.weatherappcompose.presentation.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

@@ -1,4 +1,4 @@
-package com.sddrozdov.weatherappcompose.ui.theme
+package com.sddrozdov.weatherappcompose.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 

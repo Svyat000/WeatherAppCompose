@@ -1,6 +1,5 @@
-package com.sddrozdov.weatherappcompose.ui.theme
+package com.sddrozdov.weatherappcompose.presentation.theme
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
