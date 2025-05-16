@@ -57,8 +57,9 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    implementation (libs.retrofit2.retrofit)
-    implementation (libs.retrofit2.converter.gson)
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converterJson)
+    implementation(libs.okhttp)
 
     implementation(libs.coil.compose)
     implementation(libs.coil.network.okhttp)
