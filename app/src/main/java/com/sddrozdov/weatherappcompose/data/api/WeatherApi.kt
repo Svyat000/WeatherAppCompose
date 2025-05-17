@@ -1,6 +1,6 @@
-package com.sddrozdov.weatherappcompose.api
+package com.sddrozdov.weatherappcompose.data.api
 
-import com.sddrozdov.weatherappcompose.models.WeatherResponse
+import com.sddrozdov.weatherappcompose.data.dto.WeatherResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 

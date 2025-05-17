@@ -6,6 +6,8 @@ data class Weather(
     val currentTemp: Double,
     val condition: String,
     val iconUrl: String,
+    val tempMax: Double,
+    val tempMin: Double,
     val forecastDays: List<DailyForecast>
 )
 data class DailyForecast(
