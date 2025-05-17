@@ -10,13 +10,16 @@ data class Weather(
     val tempMin: Double,
     val forecastDays: List<DailyForecast>
 )
+
 data class DailyForecast(
     val date: String,
     val maxTemp: Double,
     val minTemp: Double,
     val condition: String,
+    val iconUrl: String,
     val hourlyForecast: List<HourlyForecast>
 )
+
 data class HourlyForecast(
     val time: String,
     val temp: Double,
