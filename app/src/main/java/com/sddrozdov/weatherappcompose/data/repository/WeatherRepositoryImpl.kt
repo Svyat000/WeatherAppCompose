@@ -1,6 +1,6 @@
 package com.sddrozdov.weatherappcompose.data.repository
 
-import com.sddrozdov.weatherappcompose.Constants.Const
+import com.sddrozdov.weatherappcompose.constants.Const
 import com.sddrozdov.weatherappcompose.data.api.WeatherApi
 import com.sddrozdov.weatherappcompose.data.weatherMapper.toDomainModel
 import com.sddrozdov.weatherappcompose.domain.model.Weather
