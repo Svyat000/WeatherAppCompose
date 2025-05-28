@@ -8,6 +8,7 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.remember
@@ -19,9 +20,7 @@ import androidx.compose.ui.unit.dp
 import com.sddrozdov.weatherappcompose.domain.model.DailyForecast
 import com.sddrozdov.weatherappcompose.presentation.state.WeatherTab
 import com.sddrozdov.weatherappcompose.presentation.theme.Blue
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import okhttp3.Dispatcher
 
 
 @Composable
@@ -42,10 +41,13 @@ fun TabLayout(forecast: List<DailyForecast>) {
             containerColor = Blue,
             contentColor = Color.Yellow,
         ) {
+
             WeatherTab.entries.forEachIndexed { index, currentTab ->
                 Tab(selected = selectedTabIndex.value == index, onClick = {
-                    coroutineScope.launch{ pagerState.animateScrollToPage(currentTab.ordinal) }
-                })
+                    coroutineScope.launch { pagerState.animateScrollToPage(currentTab.ordinal) }
+                }) {
+                    Text(text = currentTab.toString())
+                }
             }
 
         }

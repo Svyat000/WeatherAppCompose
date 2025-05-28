@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.SearchBar
+import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -34,6 +35,7 @@ fun MainScreen(viewModel: MainScreenViewModel = hiltViewModel()) {
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(8.dp),
+
             query = searchQuery,
             onQueryChange = {
                 searchQuery = it
@@ -41,7 +43,10 @@ fun MainScreen(viewModel: MainScreenViewModel = hiltViewModel()) {
             },
             onSearch = { viewModel.onEvent(WeatherScreenEvent.RefreshWeather) },
             active = false,
-            onActiveChange = {}
+            onActiveChange = {},
+            colors = SearchBarDefaults.colors(
+                containerColor = Color(0xFFAACBF1)
+            )
         ) {}
 
         when {
@@ -50,12 +55,13 @@ fun MainScreen(viewModel: MainScreenViewModel = hiltViewModel()) {
                     LoadingIndicator()
                 }
             }
+
             state.error != null -> ErrorMessage(state.error!!)
             state.currentWeather != null -> WeatherContent(state)
             else -> Text(
                 text = "Введите название города",
                 modifier = Modifier.padding(16.dp),
-                color = Color.White
+                color = Color.Blue
             )
         }
     }
