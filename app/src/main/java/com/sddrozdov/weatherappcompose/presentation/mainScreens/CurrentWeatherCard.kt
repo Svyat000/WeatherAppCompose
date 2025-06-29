@@ -24,84 +24,103 @@ import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import com.sddrozdov.weatherappcompose.R
 import com.sddrozdov.weatherappcompose.domain.model.Weather
-
 import com.sddrozdov.weatherappcompose.presentation.theme.Blue
 
 //@Preview(showBackground = true)
 @Composable
 fun CurrentWeatherCard(weather: Weather) {
     Card(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 8.dp),
         colors = CardDefaults.cardColors(containerColor = Blue),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
-        shape = RoundedCornerShape(12.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
+        shape = RoundedCornerShape(16.dp)
     ) {
-
         Column(
-            modifier = Modifier.wrapContentHeight(),
+            modifier = Modifier
+                .padding(16.dp)
+                .wrapContentHeight(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    modifier = Modifier.padding(top = 8.dp, start = 10.dp),
-                    text = weather.localTime, style = TextStyle(
-                        fontSize = 20.sp,
-                        color = Color.Yellow
+                    text = weather.localTime,
+                    style = TextStyle(
+                        fontSize = 18.sp,
+                        color = Color.Yellow.copy(alpha = 0.85f)
                     )
                 )
                 AsyncImage(
                     model = weather.iconUrl,
-                    contentDescription = "imageWeatherApi",
-                    modifier = Modifier
-                        .size(40.dp)
-                        .padding(top = 3.dp, end = 9.dp)
+                    contentDescription = "Weather icon",
+                    modifier = Modifier.size(48.dp)
                 )
             }
-            Text(
-                text = weather.city, style = TextStyle(
-                    fontSize = 20.sp,
-                    color = Color.Yellow
-                )
-            )
-            Text(
-                text = weather.currentTemp.toString(), style = TextStyle(
-                    fontSize = 60.sp,
-                    color = Color.Yellow
-                )
-            )
-            Text(
-                text = weather.condition, style = TextStyle(
-                    fontSize = 20.sp,
-                    color = Color.Yellow
-                )
-            )
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                IconButton(onClick = {
 
-                }) {
+            Text(
+                text = weather.city,
+                style = TextStyle(
+                    fontSize = 24.sp,
+                    color = Color.Yellow,
+                    fontWeight = androidx.compose.ui.text.font.FontWeight.SemiBold
+                ),
+                modifier = Modifier.padding(top = 8.dp)
+            )
+
+            Text(
+                text = "${weather.currentTemp.toInt()}°",
+                style = TextStyle(
+                    fontSize = 72.sp,
+                    color = Color.Yellow,
+                    fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
+                    letterSpacing = 2.sp
+                ),
+                modifier = Modifier.padding(vertical = 4.dp)
+            )
+
+            Text(
+                text = weather.condition,
+                style = TextStyle(
+                    fontSize = 20.sp,
+                    color = Color.Yellow.copy(alpha = 0.9f),
+                    fontWeight = androidx.compose.ui.text.font.FontWeight.Medium
+                )
+            )
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 12.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                IconButton(onClick = { /* TODO: Search action */ }) {
                     Icon(
                         painter = painterResource(id = R.drawable.baseline_search_24),
-                        contentDescription = "icon2"
+                        contentDescription = "Search icon",
+                        tint = Color.Yellow
                     )
                 }
+
                 Text(
-                    text = "${weather.tempMax}/${weather.tempMin}", style = TextStyle(
-                        fontSize = 20.sp,
-                        color = Color.Yellow
+                    text = "${weather.tempMax.toInt()}° / ${weather.tempMin.toInt()}°",
+                    style = TextStyle(
+                        fontSize = 18.sp,
+                        color = Color.Yellow,
+                        fontWeight = androidx.compose.ui.text.font.FontWeight.Medium
                     )
                 )
-                IconButton(onClick = {
 
-                }) {
+                IconButton(onClick = { /* TODO: Refresh action */ }) {
                     Icon(
                         painter = painterResource(id = R.drawable.baseline_sync_24),
-                        contentDescription = "icon3"
+                        contentDescription = "Refresh icon",
+                        tint = Color.Yellow
                     )
                 }
             }
