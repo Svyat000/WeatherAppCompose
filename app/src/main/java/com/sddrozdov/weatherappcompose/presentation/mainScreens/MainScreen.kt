@@ -18,7 +18,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Blue
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.sddrozdov.weatherappcompose.presentation.state.MainScreenState
 import com.sddrozdov.weatherappcompose.presentation.state.WeatherScreenEvent
@@ -30,12 +32,14 @@ fun MainScreen(viewModel: MainScreenViewModel = hiltViewModel()) {
     val state by viewModel.state.collectAsState()
     var searchQuery by remember { mutableStateOf(state.city) }
 
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 16.dp, vertical = 12.dp)
+    ) {
         SearchBar(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp),
-
+                .fillMaxWidth(),
             query = searchQuery,
             onQueryChange = {
                 searchQuery = it
@@ -45,23 +49,41 @@ fun MainScreen(viewModel: MainScreenViewModel = hiltViewModel()) {
             active = false,
             onActiveChange = {},
             colors = SearchBarDefaults.colors(
-                containerColor = Color(0xFFAACBF1)
-            )
+                containerColor = Color(0xFFAACBF1),
+            ),
+            placeholder = {
+                Text(
+                    "Введите название города",
+                    color = Color.White.copy(alpha = 0.7f)
+                )
+            }
         ) {}
 
         when {
             state.isLoading -> {
-                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
                     LoadingIndicator()
                 }
             }
 
-            state.error != null -> ErrorMessage(state.error!!)
+            state.error != null -> ErrorMessage(
+                message = state.error!!,
+                modifier = Modifier.padding(top = 24.dp)
+            )
+
             state.currentWeather != null -> WeatherContent(state)
+
             else -> Text(
                 text = "Введите название города",
-                modifier = Modifier.padding(16.dp),
-                color = Color.Blue
+                modifier = Modifier
+                    .padding(top = 24.dp)
+                    .align(Alignment.CenterHorizontally),
+                color = Blue,
+                fontSize = 18.sp
             )
         }
     }
@@ -69,7 +91,9 @@ fun MainScreen(viewModel: MainScreenViewModel = hiltViewModel()) {
 
 @Composable
 private fun WeatherContent(state: MainScreenState) {
-    Column {
+    Column(
+        modifier = Modifier.padding(top = 16.dp)
+    ) {
         state.currentWeather?.let {
             CurrentWeatherCard(weather = it)
             TabLayout(forecast = it.forecastDays)
