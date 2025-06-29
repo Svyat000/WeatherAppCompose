@@ -1,6 +1,5 @@
 package com.sddrozdov.weatherappcompose.presentation.mainScreens
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -22,38 +21,56 @@ import com.sddrozdov.weatherappcompose.domain.model.Weather
 import com.sddrozdov.weatherappcompose.presentation.theme.Blue
 
 
-//@Preview(showBackground = true)
 @Composable
 fun ListItem(weather: Weather) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 5.dp),
+            .padding(vertical = 6.dp, horizontal = 8.dp),
         colors = CardDefaults.cardColors(containerColor = Blue),
-        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
-        shape = RoundedCornerShape(4.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
+        shape = RoundedCornerShape(12.dp)
     ) {
         Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 12.dp, vertical = 10.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Column(modifier = Modifier.padding(start = 5.dp, top = 3.dp, bottom = 3.dp)) {
-                Text(text = weather.localTime)
-                Text(text = weather.condition)
+            Column(
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(
+                    text = weather.localTime,
+                    style = TextStyle(
+                        fontSize = 16.sp,
+                        color = Color.White.copy(alpha = 0.8f)
+                    )
+                )
+                Text(
+                    text = weather.condition,
+                    style = TextStyle(
+                        fontSize = 14.sp,
+                        color = Color.White,
+                        fontWeight = androidx.compose.ui.text.font.FontWeight.SemiBold
+                    )
+                )
             }
 
             Text(
                 text = "${weather.currentTemp.toInt()}°C",
                 color = Color.Yellow,
-                style = TextStyle(fontSize = 20.sp)
+                style = TextStyle(
+                    fontSize = 24.sp,
+                    fontWeight = androidx.compose.ui.text.font.FontWeight.Bold
+                ),
+                modifier = Modifier.padding(end = 12.dp)
             )
+
             AsyncImage(
                 model = "https:${weather.iconUrl}",
-                contentDescription = "imageWeatherApi",
-                modifier = Modifier
-                    .size(40.dp)
-                    .padding(top = 3.dp, end = 9.dp)
+                contentDescription = "Weather icon",
+                modifier = Modifier.size(48.dp)
             )
         }
     }
